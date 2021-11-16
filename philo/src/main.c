@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+        */
+/*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 21:41:53 by dev               #+#    #+#             */
-/*   Updated: 2021/11/12 23:34:15 by dev              ###   ########lyon.fr   */
+/*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
+/*   Updated: 2021/11/16 17:08:16 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static int	arguments_checker(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		write(2, "Usage: nb_of_philo time_to_die time_to_eat time_to_sleep [meal_goal]\n", 69);
+		write(STDERR_FILENO, "Usage: nb_of_philo time_to_die", 30);
+		write(STDERR_FILENO, "time_to_eat time_to_sleep [meal_goal]\n", 38);
 		return (EXIT_FAILURE);
 	}
 	i = 1;
@@ -37,9 +38,9 @@ static int	arguments_checker(int argc, char **argv)
 	{
 		if (!ft_str_isdigit(argv[i]))
 		{
-			write(2, "philo: ", 7);
-			write(2, argv[i], ft_strlen(argv[i]));
-			write(2, ": Invalid argument\n", 19);
+			write(STDERR_FILENO, "philo: ", 7);
+			write(STDERR_FILENO, argv[i], ft_strlen(argv[i]));
+			write(STDERR_FILENO, ": Invalid argument\n", 19);
 			return (EXIT_FAILURE);
 		}
 		i++;
@@ -49,7 +50,7 @@ static int	arguments_checker(int argc, char **argv)
 
 int	main(int argc, char **argv)
 {
-	t_control all;
+	t_control	all;
 
 	if (arguments_checker(argc, argv) == EXIT_FAILURE)
 		return (EXIT_FAILURE);

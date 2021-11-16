@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+        */
+/*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/12 22:16:14 by dev               #+#    #+#             */
-/*   Updated: 2021/11/12 23:30:57 by dev              ###   ########lyon.fr   */
+/*   Created: 2021/11/16 17:05:09 by pthomas           #+#    #+#             */
+/*   Updated: 2021/11/16 17:08:38 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 int	ft_str_isdigit(char *str)
 {
 	while (*str)
-    {
+	{
 		if (!('0' <= *str && *str <= '9'))
 			return (0);
-        str++;
-    }
+		str++;
+	}
 	return (1);
 }
 
 size_t	ft_strlen(char *str)
 {
-	size_t i;
+	size_t	i;
 
 	if (!str)
 		return (0);

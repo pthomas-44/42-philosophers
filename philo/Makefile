@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dev <dev@student.42lyon.fr>                +#+  +:+       +#+         #
+#    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2021/11/12 21:52:46 by dev               #+#    #+#              #
-#    Updated: 2021/11/12 22:43:06 by dev              ###   ########lyon.fr    #
+#    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
+#    Updated: 2021/11/16 17:06:24 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,7 @@ INCS		=	$(addprefix $(PATH_INC), philo.h)
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror
 RM			=	rm -rf
+INCLUDE		=	-I $(PATH_INC)
 
 #========================================#
 #=============== TARGETS ================#
@@ -48,7 +49,7 @@ RM			=	rm -rf
 all :			$(NAME)
 
 $(NAME) :		$(OBJS)
-				$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -I $(PATH_INC)
+				$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDE)
 
 re :			fclean all
 
@@ -56,7 +57,7 @@ re :			fclean all
 
 $(PATH_OBJ)%.o :	%.c $(INCS)
 					@mkdir -p $(dir $@);
-					$(CC) $(CFLAGS) -c $< -o $@ -I $(PATH_INC)
+					$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDE)
 
 #~~~~ Cleaning Rules ~~~~#
 
