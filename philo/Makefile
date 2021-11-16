@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/16 17:06:24 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/16 20:36:29 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,9 @@ PATH_INC	=	include/
 
 #~~~~ Files ~~~~#
  
-SRCS		=	main.c \
+SRCS		=	main.c				\
+				init.c				\
+				libft_functions.c	\
 				utils.c
 
 OBJS		=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
@@ -36,7 +38,7 @@ INCS		=	$(addprefix $(PATH_INC), philo.h)
 #~~~~ Macros ~~~~#
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror -pthread
 RM			=	rm -rf
 INCLUDE		=	-I $(PATH_INC)
 
