@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 01:58:14 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 02:48:48 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,27 @@ void	print_error(char *cmd, char *value, char *error, int status)
 		ft_putstr_fd(error, STDERR_FILENO);
 	else
 		ft_putstr_fd("Undefined error\n", STDERR_FILENO);
+}
+
+int	is_overflow(const char *str)
+{
+	long	nb;
+	int		sign;
+
+	nb = 0;
+	sign = 1;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while ('0' <= *str && *str <= '9')
+	{
+		nb = nb * 10 + (*str - 48) * sign;
+		if (nb < INT_MIN || nb > INT_MAX)
+			return (1);
+		str++;
+	}
+	return (0);
 }

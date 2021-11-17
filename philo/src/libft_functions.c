@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:09 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/16 21:02:24 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 02:45:22 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,4 @@ int	ft_atoi(const char *str)
 void	ft_putstr_fd(const char *s, int fd)
 {
 	write(fd, s, ft_strlen(s));
-}
-
-unsigned long	ft_pow(int nb, size_t exp)
-{
-	unsigned long	result;
-
-	if (!exp)
-		return (1);
-	result = nb;
-	while (exp > 1)
-	{
-		result *= nb;
-		exp--;
-	}
-	return (result);
 }

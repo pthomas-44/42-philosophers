@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 00:16:32 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 02:52:13 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,21 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdbool.h>
+# include <limits.h>
 
 /*** ~~ TYPES ~~ ***/
 
 typedef struct s_philo	t_philo;
 typedef struct s_data	t_data;
 
-/*** ~~ ACTIONS ~~ ***/
+/*** ~~ DEFINES ~~ ***/
 
 # define EAT		0
 # define SLEEP		1
 # define THINK		2
 # define TAKE_FORK	3
+# define USAGE_MSG	"philo number_of_philosophers time_to_die time_to_eat \
+time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 
 /*** ~~ STRUCTURES ~~ ***/
 
@@ -84,5 +87,6 @@ unsigned long	ft_pow(int nb, size_t exp);
 time_t			get_time(void);
 void			print_action(t_philo *philo, char *action);
 void			print_error(char *cmd, char *value, char *error, int status);
+int				is_overflow(const char *str);
 
 #endif

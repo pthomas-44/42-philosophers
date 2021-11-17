@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 02:02:01 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 02:51:55 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,16 @@
 static int	arguments_checker(int argc, char **argv)
 {
 	size_t	i;
-	int		tmp;
 
 	if (argc < 5 || argc > 6)
 	{
-		print_error("Usage: ", NULL, "philo number_of_philosophers time_to_die time_to_eat \
-time_to_sleep [number_of_times_each_philosopher_must_eat\n", -1);
+		print_error("Usage: ", NULL, USAGE_MSG, -1);
 		return (EXIT_FAILURE);
 	}
 	i = 1;
 	while (argv[i])
 	{
-		tmp = ft_atoi(argv[i]) / ft_pow(10, ft_strlen(argv[i]) - 1);
-		if (!ft_str_isdigit(argv[i]) || ft_atoi(argv[i]) < 1 || !tmp || tmp > 9)
+		if (!ft_str_isdigit(argv[i]) || is_overflow(argv[i]))
 		{
 			print_error(NULL, argv[i], NULL, EINVAL);
 			return (EXIT_FAILURE);

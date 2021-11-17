@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 01:15:31 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 03:01:28 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,13 @@ static void	init_philo(t_data *data)
 			data->philo[i].right_fork = &data->forks[0];
 		else
 			data->philo[i].right_fork = &data->forks[i + 1];
-		data->philo[i].nb_of_meal = 0;
 		i++;
 	}
 }
 
 static int	init_mutex(t_data *data)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	memset(data->forks, 0, sizeof(pthread_mutex_t) * data->nb_of_forks);
@@ -47,7 +46,7 @@ static int	init_mutex(t_data *data)
 	if (i-- != data->nb_of_forks || pthread_mutex_init(&data->speak, NULL))
 	{
 		print_error("pthread: ", NULL, NULL, errno);
-		while (i)
+		while (i > -1)
 		{
 			if (pthread_mutex_destroy(&data->forks[i]))
 				print_error("pthread: ", NULL, NULL, errno);
@@ -70,11 +69,12 @@ int	init_data(t_data *data, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argv[5])
 		data->meal_goal = ft_atoi(argv[5]);
-	data->stop = false;
 	data->philo = malloc(sizeof(t_philo) * data->nb_of_philo);
 	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_of_forks);
 	if (!data->philo || !data->forks)
 	{
+		free(data->philo);
+		free(data->forks);
 		print_error("malloc: ", NULL, NULL, ENOMEM);
 		return (EXIT_FAILURE);
 	}
