@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 02:01:34 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 13:45:21 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,26 +67,28 @@ int	do_action(t_philo *philo, int action)
 void	*routine(void	*arg)
 {
 	t_philo	*philo;
-	bool	stop;
 
 	philo = arg;
-	stop = false;
 	if (philo->index % 2 == 0)
-		usleep(philo->data->time_to_eat * 1000);
-	while (stop == false)
+		spin_lock(get_time(), philo->data->time_to_eat, philo->data);
+	while (philo->stop == false)
 	{
 		pthread_mutex_lock(philo->left_fork);
-		stop = do_action(philo, TAKE_FORK);
+		philo->stop = do_action(philo, TAKE_FORK);
+		if (philo->left_fork == philo->right_fork)
+			break ;
 		pthread_mutex_lock(philo->right_fork);
-		stop = do_action(philo, TAKE_FORK);
-		stop = do_action(philo, EAT);
-		usleep(philo->data->time_to_eat * 1000);
+		philo->stop = do_action(philo, TAKE_FORK);
+		philo->stop = do_action(philo, EAT);
+		spin_lock(get_time(), philo->data->time_to_eat, philo->data);
+		philo->stop = do_action(philo, SLEEP);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
-		stop = do_action(philo, SLEEP);
-		usleep(philo->data->time_to_sleep * 1000);
-		stop = do_action(philo, THINK);
+		spin_lock(get_time(), philo->data->time_to_sleep, philo->data);
+		philo->stop = do_action(philo, THINK);
 	}
+	if (philo->left_fork == philo->right_fork)
+		pthread_mutex_unlock(philo->right_fork);
 	return (NULL);
 }
 

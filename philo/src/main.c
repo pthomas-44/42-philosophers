@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 02:51:55 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 13:53:45 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static int	arguments_checker(int argc, char **argv)
 {
 	size_t	i;
+	int		tmp;
 
 	if (argc < 5 || argc > 6)
 	{
@@ -24,7 +25,8 @@ static int	arguments_checker(int argc, char **argv)
 	i = 1;
 	while (argv[i])
 	{
-		if (!ft_str_isdigit(argv[i]) || is_overflow(argv[i]))
+		if (!ft_str_isdigit(argv[i])
+			|| ft_atoi_is_overflow(argv[i], &tmp) || tmp == 0)
 		{
 			print_error(NULL, argv[i], NULL, EINVAL);
 			return (EXIT_FAILURE);

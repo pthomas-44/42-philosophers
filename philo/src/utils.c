@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 02:48:48 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 13:47:09 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,25 +55,16 @@ void	print_error(char *cmd, char *value, char *error, int status)
 		ft_putstr_fd("Undefined error\n", STDERR_FILENO);
 }
 
-int	is_overflow(const char *str)
+void	spin_lock(time_t starting_time, time_t waiting_time, t_data *data)
 {
-	long	nb;
-	int		sign;
-
-	nb = 0;
-	sign = 1;
-	if (*str == '-' || *str == '+')
+	while (get_time() - starting_time < waiting_time)
 	{
-		if (*str == '-')
-			sign = -1;
-		str++;
+		pthread_mutex_lock(&data->speak);
+		if (data->stop == true)
+		{
+			pthread_mutex_unlock(&data->speak);
+			break ;
+		}
+		pthread_mutex_unlock(&data->speak);
 	}
-	while ('0' <= *str && *str <= '9')
-	{
-		nb = nb * 10 + (*str - 48) * sign;
-		if (nb < INT_MIN || nb > INT_MAX)
-			return (1);
-		str++;
-	}
-	return (0);
 }

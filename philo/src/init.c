@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 03:01:28 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 13:28:18 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	init_philo(t_data *data)
 	while (i < data->nb_of_philo)
 	{
 		data->philo[i].data = data;
-		data->philo[i].index = i;
+		data->philo[i].index = i + 1;
 		data->philo[i].left_fork = &data->forks[i];
 		if (i == data->nb_of_philo - 1)
 			data->philo[i].right_fork = &data->forks[0];
@@ -37,13 +37,13 @@ static int	init_mutex(t_data *data)
 
 	i = 0;
 	memset(data->forks, 0, sizeof(pthread_mutex_t) * data->nb_of_forks);
-	while (i < data->nb_of_forks)
+	while (i < (int)data->nb_of_forks)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			break ;
 		i++;
 	}
-	if (i-- != data->nb_of_forks || pthread_mutex_init(&data->speak, NULL))
+	if (i-- != (int)data->nb_of_forks || pthread_mutex_init(&data->speak, NULL))
 	{
 		print_error("pthread: ", NULL, NULL, errno);
 		while (i > -1)
