@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 00:26:21 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 02:02:01 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ static void	free_data(t_data *data)
 {
 	size_t	i;
 
+	i = 0;
+	while (i < data->nb_of_philo)
+	{
+		pthread_join(data->philo[i].thread, NULL);
+		i++;
+	}
 	free(data->philo);
 	i = 0;
 	while (i < data->nb_of_forks)

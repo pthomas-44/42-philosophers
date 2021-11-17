@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 01:35:15 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 01:58:14 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ void	print_error(char *cmd, char *value, char *error, int status)
 		ft_putstr_fd("Out of memory\n", STDERR_FILENO);
 	else if (errno == EPERM)
 		ft_putstr_fd("Operation not permitted\n", STDERR_FILENO);
-	if (error)
+	else if (error)
 		ft_putstr_fd(error, STDERR_FILENO);
+	else
+		ft_putstr_fd("Undefined error\n", STDERR_FILENO);
 }
