@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 00:19:17 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 01:40:28 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	check_deaths_and_repletion(t_data *data)
 			print_action(&data->philo[i], "died");
 			return (true);
 		}
+		i++;
 	}
 	return (repletion);
 }
@@ -107,6 +108,7 @@ int	start_philosopher(t_data *data)
 			return (EXIT_FAILURE);
 		}
 		pthread_detach(data->philo[i].thread);
+		i++;
 	}
 	while (!data->stop)
 	{
