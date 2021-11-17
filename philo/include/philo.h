@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/16 20:39:14 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 00:16:32 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@
 typedef struct s_philo	t_philo;
 typedef struct s_data	t_data;
 
+/*** ~~ ACTIONS ~~ ***/
+
+# define EAT		0
+# define SLEEP		1
+# define THINK		2
+# define TAKE_FORK	3
+
 /*** ~~ STRUCTURES ~~ ***/
 
 // ~~ Philospher struct
@@ -40,6 +47,7 @@ typedef struct s_philo
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	time_t			last_meal;
+	size_t			nb_of_meal;
 	t_data			*data;
 }					t_philo;
 
@@ -60,12 +68,12 @@ typedef struct s_data
 	size_t			meal_goal;
 }					t_data;
 
-// ~~ Command line struct
-
 /*** ~~ PROTOTYPES ~~ ***/
 
 // ~~ init.c
 int				init_data(t_data *data, char **argv);
+// ~~ program.c
+int			start_philosopher(t_data *data);
 // ~~ libft_functions.c
 int				ft_str_isdigit(char *str);
 size_t			ft_strlen(const char *str);
@@ -74,5 +82,7 @@ void			ft_putstr_fd(const char *s, int fd);
 unsigned long	ft_pow(int nb, size_t exp);
 // ~~ utils.c
 time_t			get_time(void);
+void			print_action(t_philo *philo, char *action);
+void			print_error(char *cmd, char *value, char *error, int status);
 
 #endif

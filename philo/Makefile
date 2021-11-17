@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/16 20:36:29 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/16 22:46:47 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ PATH_INC	=	include/
  
 SRCS		=	main.c				\
 				init.c				\
+				program.c			\
 				libft_functions.c	\
 				utils.c
 

@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/16 20:39:38 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 00:26:21 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,17 @@ static int	arguments_checker(int argc, char **argv)
 
 	if (argc < 5 || argc > 6)
 	{
-		ft_putstr_fd("Usage: philo number_of_philosophers time_to_die time_to_eat \
-time_to_sleep [number_of_times_each_philosopher_must_eat]\n", STDERR_FILENO);
+		print_error("Usage: ", NULL, "philo number_of_philosophers time_to_die time_to_eat \
+time_to_sleep [number_of_times_each_philosopher_must_eat\n", -1);
 		return (EXIT_FAILURE);
 	}
 	i = 1;
 	while (argv[i])
 	{
 		tmp = ft_atoi(argv[i]) / ft_pow(10, ft_strlen(argv[i]) - 1);
-		if (!ft_str_isdigit(argv[i]) || ft_atoi(argv[i]) < 0 || !tmp || tmp > 9)
+		if (!ft_str_isdigit(argv[i]) || ft_atoi(argv[i]) < 1 || !tmp || tmp > 9)
 		{
-			ft_putstr_fd("philo: ", STDERR_FILENO);
-			ft_putstr_fd(argv[i], STDERR_FILENO);
-			ft_putstr_fd(": Invalid argument\n", STDERR_FILENO);
+			print_error(NULL, argv[i], NULL, EINVAL);
 			return (EXIT_FAILURE);
 		}
 		i++;
@@ -47,11 +45,13 @@ static void	free_data(t_data *data)
 	i = 0;
 	while (i < data->nb_of_forks)
 	{
-		pthread_mutex_destroy(&data->forks[i]);
+		if (pthread_mutex_destroy(&data->forks[i]))
+			print_error("pthread: ", NULL, NULL, errno);
 		i++;
 	}
 	free(data->forks);
-	pthread_mutex_destroy(&data->speak);
+	if (pthread_mutex_destroy(&data->speak))
+		print_error("pthread: ", NULL, NULL, errno);
 }
 
 int	main(int argc, char **argv)
@@ -62,11 +62,11 @@ int	main(int argc, char **argv)
 		return (EXIT_FAILURE);
 	if (init_data(&data, argv) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	// start_philosopher(&data);
+	if (start_philosopher(&data) == EXIT_FAILURE)
+	{
+		free_data(&data);
+		return (EXIT_FAILURE);
+	}
 	free_data(&data);
 	return (EXIT_SUCCESS);
 }
-
-// data->start = get_time();
-// data->philo[i].last_meal = data->start;
-// pthread_create(&data->philo[i].thread, NULL, &routine, &data->philo[i]);
