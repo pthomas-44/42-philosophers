@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 16:52:16 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 18:38:37 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	init_data(t_data *data, char **argv)
 		print_error("malloc: ", NULL, NULL, ENOMEM);
 		return (EXIT_FAILURE);
 	}
-	if (init_mutex(data) == -1)
+	if (init_mutex(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	init_philo(data);
 	return (EXIT_SUCCESS);

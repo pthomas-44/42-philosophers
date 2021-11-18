@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 16:52:20 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/17 19:23:47 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int	start_philosopher(t_data *data)
 		if (pthread_create(&data->philo[i].thread,
 				NULL, &routine, &data->philo[i]))
 		{
+			print_error("pthread_create", NULL, NULL, errno);
 			pthread_mutex_lock(&data->speak);
 			data->stop = true;
 			pthread_mutex_unlock(&data->speak);
