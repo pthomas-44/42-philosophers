@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 19:43:56 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/19 14:32:53 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 
 typedef struct s_philo
 {
-	pthread_t		thread;
+	pthread_t		monitor;
 	sem_t			*rights;
 	unsigned int	index;
 	time_t			last_meal;
@@ -61,11 +61,13 @@ typedef struct s_philo
 
 typedef struct s_data
 {
-	pid_t			*philo;
+	t_philo			philo;
+	pid_t			*pid_philo;
 	sem_t			*forks;
 	sem_t			*speak;
 	sem_t			*stop;
-	pthread_t		thread;
+	sem_t			*repletion;
+	pthread_t		monitor;
 	time_t			start;
 	size_t			nb_of_philo;
 	size_t			nb_of_forks;
@@ -77,22 +79,24 @@ typedef struct s_data
 
 /*** ~~ PROTOTYPES ~~ ***/
 
-// ~~ init.c
+// ~~ init_bonus.c
 int				init_data(t_data *data, char **argv);
-void			init_philo(t_data *data, t_philo *philo);
-// ~~ program.c
+void			init_philo(t_data *data);
+// ~~ program_bonus.c
 int				start_philosopher(t_data *data);
-// ~~ libft_functions.c
+void			*death_checker(void *arg);
+void			*repletion_checker(void *arg);
+// ~~ libft_functions_bonus.c
 int				ft_str_isdigit(char *str);
 size_t			ft_strlen(const char *str);
 int				ft_atoi(const char *str);
 void			ft_putstr_fd(const char *s, int fd);
 int				ft_atoi_is_overflow(const char *str, int *nb);
-// ~~ utils.c
+// ~~ utils_bonus.c
 time_t			get_time(void);
 void			print_action(t_data *data, t_philo *philo, char *action);
 void			print_error(char *cmd, char *value, char *error, int status);
-void			spin_lock(time_t starting_time,
-					time_t waiting_time, t_data *data);
+void			spin_lock(time_t starting_time, time_t waiting_time);
+void			custom_usleep(long long microseconds);
 
 #endif

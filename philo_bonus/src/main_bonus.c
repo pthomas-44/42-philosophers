@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 19:13:01 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/19 14:32:48 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,19 +43,21 @@ static void	kill_philosophers(t_data *data)
 	i = 0;
 	while (i < data->nb_of_philo)
 	{
-		kill(data->philo[i], SIGKILL);
+		kill(data->pid_philo[i], SIGKILL);
 		i++;
 	}
 }
 
 static void	free_data(t_data *data)
 {
-	free(data->philo);
+	free(data->pid_philo);
 	if (sem_close(data->forks))
 		print_error("sem_close: ", NULL, NULL, EINVAL);
 	if (sem_close(data->speak))
 		print_error("sem_close: ", NULL, NULL, EINVAL);
 	if (sem_close(data->stop))
+		print_error("sem_close: ", NULL, NULL, EINVAL);
+	if (sem_close(data->repletion))
 		print_error("sem_close: ", NULL, NULL, EINVAL);
 }
 

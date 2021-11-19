@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 19:43:42 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/19 14:32:33 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,19 @@ void	print_error(char *cmd, char *value, char *error, int status)
 		ft_putstr_fd("Undefined error\n", STDERR_FILENO);
 }
 
-void	spin_lock(time_t starting_time, time_t waiting_time, t_data *data)
+void	spin_lock(time_t starting_time, time_t waiting_time)
 {
 	while (get_time() - starting_time < waiting_time)
 		;
+}
+
+void	custom_usleep(long long microseconds)
+{
+	long long	i;
+	long long	start;
+
+	i = 0;
+	start = get_time();
+	while (get_time() - start < microseconds / 1000)
+		usleep(100);
 }
