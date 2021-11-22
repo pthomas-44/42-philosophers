@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 13:47:16 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/22 13:27:11 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,13 @@ size_t			ft_strlen(const char *str);
 int				ft_atoi(const char *str);
 void			ft_putstr_fd(const char *s, int fd);
 int				ft_atoi_is_overflow(const char *str, int *nb);
+void			ft_putnbr_fd(long n, int fd);
 // ~~ utils.c
 time_t			get_time(void);
 void			print_action(t_philo *philo, char *action);
 void			print_error(char *cmd, char *value, char *error, int status);
-void			spin_lock(time_t starting_time,
-					time_t waiting_time, t_data *data);
+void			spin_lock(long long starting_time,
+					long long waiting_time, t_data *data);
+void			custom_usleep(long long microseconds, t_data *data);
 
 #endif

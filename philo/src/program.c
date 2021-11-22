@@ -6,13 +6,13 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 19:23:47 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/22 13:25:53 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	check_deaths_and_repletion(t_data *data)
+static int	check_deaths_and_repletion(t_data *data)
 {
 	size_t	i;
 	bool	repletion;
@@ -38,7 +38,7 @@ int	check_deaths_and_repletion(t_data *data)
 	return (repletion);
 }
 
-int	do_action(t_philo *philo, int action)
+static int	do_action(t_philo *philo, int action)
 {
 	pthread_mutex_lock(&philo->data->speak);
 	if (philo->data->stop)
@@ -64,13 +64,14 @@ int	do_action(t_philo *philo, int action)
 	return (EXIT_SUCCESS);
 }
 
-void	*routine(void	*arg)
+static void	*routine(void	*arg)
 {
 	t_philo	*philo;
 
 	philo = arg;
 	if (philo->index % 2 == 0)
-		spin_lock(get_time(), philo->data->time_to_eat, philo->data);
+		// custom_usleep(philo->data->time_to_eat * 1000L, philo->data);
+		spin_lock(get_time(), philo->data->time_to_eat * 1000L, philo->data);
 	while (philo->stop == false)
 	{
 		pthread_mutex_lock(philo->left_fork);
@@ -80,11 +81,13 @@ void	*routine(void	*arg)
 		pthread_mutex_lock(philo->right_fork);
 		philo->stop = do_action(philo, TAKE_FORK);
 		philo->stop = do_action(philo, EAT);
-		spin_lock(get_time(), philo->data->time_to_eat, philo->data);
+		// custom_usleep(philo->data->time_to_eat * 1000L, philo->data);
+		spin_lock(get_time(), philo->data->time_to_eat * 1000L, philo->data);
 		philo->stop = do_action(philo, SLEEP);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
-		spin_lock(get_time(), philo->data->time_to_sleep, philo->data);
+		// custom_usleep(philo->data->time_to_sleep * 1000L, philo->data);
+		spin_lock(get_time(), philo->data->time_to_sleep * 1000L, philo->data);
 		philo->stop = do_action(philo, THINK);
 	}
 	if (philo->left_fork == philo->right_fork)

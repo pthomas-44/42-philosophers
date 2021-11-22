@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:09 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 13:50:44 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/22 13:28:55 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,21 @@ int	ft_atoi_is_overflow(const char *str, int *nb)
 		str++;
 	}
 	return (0);
+}
+
+void	ft_putnbr_fd(long n, int fd)
+{
+	long long	nb;
+	char		c;
+
+	nb = n;
+	if (nb < 0)
+	{
+		write(fd, "-", 1);
+		nb = -nb;
+	}
+	if (nb > 9)
+		ft_putnbr_fd(nb / 10, fd);
+	c = (nb % 10) + 48;
+	write(fd, &c, 1);
 }
