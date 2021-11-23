@@ -6,36 +6,44 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 13:07:57 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 13:56:27 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static int	check_deaths_and_repletion(t_data *data)
+static void	check_death(t_data *data)
 {
 	size_t	i;
-	bool	repletion;
 	time_t	time;
 
 	i = 0;
-	if (!data->meal_goal)
-		repletion = false;
-	else
-		repletion = true;
 	time = get_time();
 	while (i < data->nb_of_philo)
 	{
-		if (repletion == true && data->philo[i].nb_of_meal < data->meal_goal)
-			repletion = false;
 		if (time - data->philo[i].last_meal >= data->time_to_die)
 		{
 			print_action(&data->philo[i], "died");
-			return (true);
+			data->stop = true;
+			return ;
 		}
 		i++;
 	}
-	return (repletion);
+}
+
+static int	check_repletion(t_data *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < data->nb_of_philo)
+	{
+		if (data->philo[i].nb_of_meal < data->meal_goal)
+			return (false);
+		i++;
+	}
+	data->stop = true;
+	return (true);
 }
 
 static int	do_action(t_philo *philo, int action)
@@ -57,6 +65,8 @@ static int	do_action(t_philo *philo, int action)
 	{
 		print_action(philo, "is sleeping");
 		philo->nb_of_meal++;
+		if (philo->nb_of_meal == philo->data->meal_goal)
+			check_repletion(philo->data);
 	}	
 	else if (action == THINK)
 		print_action(philo, "is thinking");
@@ -118,7 +128,7 @@ int	start_philosopher(t_data *data)
 	while (!data->stop)
 	{
 		pthread_mutex_lock(&data->speak);
-		data->stop = check_deaths_and_repletion(data);
+		check_death(data);
 		pthread_mutex_unlock(&data->speak);
 	}
 	return (EXIT_SUCCESS);

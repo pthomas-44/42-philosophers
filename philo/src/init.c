@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 13:08:04 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 13:55:51 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static int	init_mutex(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			break ;
-		if (pthread_mutex_init(&data->philo[i].meal_mutex, NULL))
-			break ;
 		i++;
 	}
 	if (i-- != (int)data->nb_of_philo || pthread_mutex_init(&data->speak, NULL))
@@ -51,8 +49,6 @@ static int	init_mutex(t_data *data)
 		while (i > -1)
 		{
 			if (pthread_mutex_destroy(&data->forks[i]))
-				print_error("pthread: ", NULL, NULL, errno);
-			if (pthread_mutex_destroy(&data->philo[i].meal_mutex))
 				print_error("pthread: ", NULL, NULL, errno);
 			i--;
 		}
