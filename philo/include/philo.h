@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 15:05:48 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 17:13:56 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,8 @@ void			ft_putnbr_fd(long n, int fd);
 time_t			get_time(void);
 void			print_action(t_philo *philo, char *action);
 void			print_error(char *cmd, char *value, char *error, int status);
-void			spin_lock(long long starting_time,
-					long long waiting_time, t_data *data);
-void			custom_usleep(long long microseconds, t_data *data);
+void			spin_lock(time_t starting_time,
+					time_t waiting_time, t_data *data);
+void			custom_usleep(time_t microseconds, t_data *data);
 
 #endif
