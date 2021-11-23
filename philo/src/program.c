@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 13:56:27 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 15:12:57 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	*routine(void	*arg)
 	philo = arg;
 	if (philo->index % 2 == 0)
 		custom_usleep(philo->data->time_to_eat * 1000L, philo->data);
-		// spin_lock(get_time(), philo->data->time_to_eat * 1000LL, philo->data);
+		// spin_lock(get_time(), philo->data->time_to_eat * 1000L, philo->data);
 	while (philo->stop == false)
 	{
 		pthread_mutex_lock(philo->left_fork);
@@ -92,12 +92,12 @@ static void	*routine(void	*arg)
 		philo->stop = do_action(philo, TAKE_FORK);
 		philo->stop = do_action(philo, EAT);
 		custom_usleep(philo->data->time_to_eat * 1000L, philo->data);
-		// spin_lock(get_time(), philo->data->time_to_eat * 1000LL, philo->data);
+		// spin_lock(get_time(), philo->data->time_to_eat * 1000L, philo->data);
 		philo->stop = do_action(philo, SLEEP);
 		pthread_mutex_unlock(philo->left_fork);
 		pthread_mutex_unlock(philo->right_fork);
 		custom_usleep(philo->data->time_to_sleep * 1000L, philo->data);
-		// spin_lock(get_time(), philo->data->time_to_sleep * 1000LL, philo->data);
+		// spin_lock(get_time(), philo->data->time_to_sleep * 1000L, philo->data);
 		philo->stop = do_action(philo, THINK);
 	}
 	if (philo->left_fork == philo->right_fork)
