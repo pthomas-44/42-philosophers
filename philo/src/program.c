@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 15:53:17 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 16:16:24 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,27 @@ static void	check_death(t_data *data)
 	size_t	i;
 	time_t	time;
 
-	i = 0;
-	time = get_time();
-	while (i < data->nb_of_philo)
+	while (1)
 	{
-		if (time - data->philo[i].last_meal >= data->time_to_die)
+		pthread_mutex_lock(&data->speak);
+		i = 0;
+		time = get_time();
+		while (i < data->nb_of_philo)
 		{
-			print_action(&data->philo[i], "died");
-			data->stop = true;
+			if (time - data->philo[i].last_meal >= data->time_to_die)
+			{
+				print_action(&data->philo[i], "died");
+				data->stop = true;
+				break ;
+			}
+			i++;
+		}
+		if (data->stop == true)
+		{
+			pthread_mutex_unlock(&data->speak);
 			return ;
 		}
-		i++;
+		pthread_mutex_unlock(&data->speak);
 	}
 }
 
@@ -125,16 +135,6 @@ int	start_philosopher(t_data *data)
 		}
 		i++;
 	}
-	while (1)
-	{
-		pthread_mutex_lock(&data->speak);
-		check_death(data);
-		if (data->stop == true)
-		{
-			pthread_mutex_unlock(&data->speak);
-			break ;
-		}
-		pthread_mutex_unlock(&data->speak);
-	}
+	check_death(data);
 	return (EXIT_SUCCESS);
 }
