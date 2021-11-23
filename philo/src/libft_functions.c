@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:09 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 17:13:56 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 20:29:50 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_atoi_is_overflow(const char *str, int *nb)
 void	ft_putnbr_fd(long n, int fd)
 {
 	time_t	nb;
-	char		c;
+	char	c;
 
 	nb = n;
 	if (nb < 0)

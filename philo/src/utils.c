@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 17:13:56 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 20:30:04 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,6 @@ void	print_error(char *cmd, char *value, char *error, int status)
 		ft_putstr_fd(error, STDERR_FILENO);
 	else
 		ft_putstr_fd("Undefined error\n", STDERR_FILENO);
-}
-
-void	spin_lock(time_t starting_time, time_t waiting_time, t_data *data)
-{
-	while (get_time() - starting_time < waiting_time / 1000L)
-	{
-		pthread_mutex_lock(&data->speak);
-		if (data->stop == true)
-		{
-			pthread_mutex_unlock(&data->speak);
-			break ;
-		}
-		pthread_mutex_unlock(&data->speak);
-	}
 }
 
 void	custom_usleep(time_t microseconds, t_data *data)
