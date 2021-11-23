@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 15:12:57 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 15:53:17 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,10 +125,15 @@ int	start_philosopher(t_data *data)
 		}
 		i++;
 	}
-	while (!data->stop)
+	while (1)
 	{
 		pthread_mutex_lock(&data->speak);
 		check_death(data);
+		if (data->stop == true)
+		{
+			pthread_mutex_unlock(&data->speak);
+			break ;
+		}
 		pthread_mutex_unlock(&data->speak);
 	}
 	return (EXIT_SUCCESS);
