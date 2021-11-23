@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/19 14:32:08 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/23 18:27:54 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,9 @@ INCS		=	$(addprefix $(PATH_INC), philo_bonus.h)
 #~~~~ Macros ~~~~#
 
 CC			=	cc
-CFLAGS		=	-Wall -Wextra -Werror #-pthread
+CFLAGS		=	-Wall -Wextra -Werror -pthread# -fsanitize=thread
 RM			=	rm -rf
-INCLUDE		=	-I $(PATH_INC)
+INCLUDE		=	-I$(PATH_INC)
 
 #========================================#
 #=============== TARGETS ================#

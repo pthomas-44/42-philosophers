@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/19 15:24:24 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 18:50:03 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,13 @@ void	*death_checker(void *arg)
 	{
 		sem_wait(data->philo.rights);
 		if (data->philo.nb_of_meal >= data->philo.meal_goal)
+		{
+			// dprintf(2, "%zu ate\n", data->philo.index);
 			sem_post(data->repletion);
+		}
 		if (get_time() - data->philo.last_meal >= data->time_to_die)
 		{
+			sem_wait(data->speak);
 			print_action(data, &data->philo, "died");
 			sem_post(data->stop);
 			exit(0);
@@ -43,7 +47,7 @@ void	*repletion_checker(void *arg)
 	while (i < data->nb_of_philo)
 	{
 		sem_wait(data->repletion);
-		i--;
+		i++;
 	}
 	sem_post(data->stop);
 	return (NULL);
@@ -97,18 +101,20 @@ static void	*routine(t_data *data)
 
 int	start_philosopher(t_data *data)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
 	data->start = get_time();
-	while (i < data->nb_of_philo)
+	while (i < (int)data->nb_of_philo)
 	{
 		data->philo.index = i + 1;
 		data->pid_philo[i] = fork();
 		if (data->pid_philo[i] == -1)
 		{
 			print_error("fork:", NULL, NULL, errno);
-			break ;
+			while (--i >= 0)
+				kill(data->pid_philo[i], SIGKILL);
+			return (EXIT_FAILURE);
 		}
 		else if (data->pid_philo[i] == 0)
 		{
@@ -117,7 +123,6 @@ int	start_philosopher(t_data *data)
 		}
 		i++;
 	}
-	if (i == data->nb_of_philo)
-		sem_wait(data->stop);
+	sem_wait(data->stop);
 	return (EXIT_SUCCESS);
 }

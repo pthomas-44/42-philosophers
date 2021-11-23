@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:09 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 17:25:01 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 18:47:57 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,6 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-int	ft_atoi(const char *str)
-{
-	int	nb;
-	int	sign;
-
-	nb = 0;
-	sign = 1;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	while ('0' <= *str && *str <= '9')
-	{
-		nb = nb * 10 + *str - 48;
-		str++;
-	}
-	return (sign * nb);
-}
-
 int	ft_atoi_is_overflow(const char *str, int *nb)
 {
 	int		sign;
@@ -81,4 +60,21 @@ int	ft_atoi_is_overflow(const char *str, int *nb)
 		str++;
 	}
 	return (0);
+}
+
+void	ft_putnbr_fd(long n, int fd)
+{
+	time_t	nb;
+	char	c;
+
+	nb = n;
+	if (nb < 0)
+	{
+		write(fd, "-", 1);
+		nb = -nb;
+	}
+	if (nb > 9)
+		ft_putnbr_fd(nb / 10, fd);
+	c = (nb % 10) + 48;
+	write(fd, &c, 1);
 }

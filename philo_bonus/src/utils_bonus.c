@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/19 14:32:33 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 18:47:24 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,12 @@ void	print_action(t_data *data, t_philo *philo, char *action)
 	time_t	time;
 
 	time = get_time() - data->start;
-	printf("%ld %d %s\n", time, philo->index, action);
+	ft_putnbr_fd(time, 1);
+	write(1, " ", 1);
+	ft_putnbr_fd(philo->index, 1);
+	write(1, " ", 1);
+	ft_putstr_fd(action, 1);
+	write(1, "\n", 1);
 }
 
 void	print_error(char *cmd, char *value, char *error, int status)
@@ -61,12 +66,10 @@ void	spin_lock(time_t starting_time, time_t waiting_time)
 		;
 }
 
-void	custom_usleep(long long microseconds)
+void	custom_usleep(time_t microseconds)
 {
-	long long	i;
-	long long	start;
+	time_t	start;
 
-	i = 0;
 	start = get_time();
 	while (get_time() - start < microseconds / 1000)
 		usleep(100);
