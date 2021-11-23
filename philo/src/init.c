@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 18:38:37 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 13:08:04 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,23 @@ static int	init_mutex(t_data *data)
 	int	i;
 
 	i = 0;
-	memset(data->forks, 0, sizeof(pthread_mutex_t) * data->nb_of_forks);
-	while (i < (int)data->nb_of_forks)
+	memset(data->forks, 0, sizeof(pthread_mutex_t) * data->nb_of_philo);
+	while (i < (int)data->nb_of_philo)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL))
 			break ;
+		if (pthread_mutex_init(&data->philo[i].meal_mutex, NULL))
+			break ;
 		i++;
 	}
-	if (i-- != (int)data->nb_of_forks || pthread_mutex_init(&data->speak, NULL))
+	if (i-- != (int)data->nb_of_philo || pthread_mutex_init(&data->speak, NULL))
 	{
 		print_error("pthread: ", NULL, NULL, errno);
 		while (i > -1)
 		{
 			if (pthread_mutex_destroy(&data->forks[i]))
+				print_error("pthread: ", NULL, NULL, errno);
+			if (pthread_mutex_destroy(&data->philo[i].meal_mutex))
 				print_error("pthread: ", NULL, NULL, errno);
 			i--;
 		}
@@ -62,15 +66,14 @@ static int	init_mutex(t_data *data)
 int	init_data(t_data *data, char **argv)
 {
 	memset(data, 0, sizeof(t_data));
-	data->nb_of_philo = ft_atoi(argv[1]);
-	data->nb_of_forks = data->nb_of_philo;
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
+	ft_atoi_is_overflow(argv[1], (int *)&data->nb_of_philo);
+	ft_atoi_is_overflow(argv[2], (int *)&data->time_to_die);
+	ft_atoi_is_overflow(argv[3], (int *)&data->time_to_eat);
+	ft_atoi_is_overflow(argv[4], (int *)&data->time_to_sleep);
 	if (argv[5])
-		data->meal_goal = ft_atoi(argv[5]);
+		ft_atoi_is_overflow(argv[5], (int *)&data->meal_goal);
 	data->philo = malloc(sizeof(t_philo) * data->nb_of_philo);
-	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_of_forks);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->nb_of_philo);
 	if (!data->philo || !data->forks)
 	{
 		free(data->philo);

@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/22 13:27:59 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 13:04:47 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_error(char *cmd, char *value, char *error, int status)
 
 void	spin_lock(long long starting_time, long long waiting_time, t_data *data)
 {
-	while (get_time() - starting_time < waiting_time / 1000)
+	while (get_time() - starting_time < waiting_time / 1000LL)
 	{
 		pthread_mutex_lock(&data->speak);
 		if (data->stop == true)
@@ -76,10 +76,8 @@ void	spin_lock(long long starting_time, long long waiting_time, t_data *data)
 
 void	custom_usleep(long long microseconds, t_data *data)
 {
-	long long	i;
 	long long	start;
 
-	i = 0;
 	start = get_time();
 	while (get_time() - start < microseconds / 1000)
 	{

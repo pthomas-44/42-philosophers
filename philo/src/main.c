@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/17 13:59:46 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 13:07:20 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ static void	free_data(t_data *data)
 	}
 	free(data->philo);
 	i = 0;
-	while (i < data->nb_of_forks)
+	while (i < data->nb_of_philo)
 	{
+		if (pthread_mutex_destroy(&data->philo[i].meal_mutex))
+			print_error("pthread: ", NULL, NULL, errno);
 		if (pthread_mutex_destroy(&data->forks[i]))
 			print_error("pthread: ", NULL, NULL, errno);
 		i++;

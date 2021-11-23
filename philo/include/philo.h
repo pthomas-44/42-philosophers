@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/22 13:27:11 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 13:04:14 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_philo
 	pthread_t		thread;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	meal_mutex;
 	time_t			last_meal;
 	size_t			nb_of_meal;
 	t_data			*data;
@@ -65,7 +66,6 @@ typedef struct s_data
 	time_t			start;
 	bool			stop;
 	size_t			nb_of_philo;
-	size_t			nb_of_forks;
 	time_t			time_to_die;
 	time_t			time_to_eat;
 	time_t			time_to_sleep;
