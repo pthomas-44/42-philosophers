@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 18:50:03 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 19:22:59 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,6 @@ void	*death_checker(void *arg)
 	while (1)
 	{
 		sem_wait(data->philo.rights);
-		if (data->philo.nb_of_meal >= data->philo.meal_goal)
-		{
-			// dprintf(2, "%zu ate\n", data->philo.index);
-			sem_post(data->repletion);
-		}
 		if (get_time() - data->philo.last_meal >= data->time_to_die)
 		{
 			sem_wait(data->speak);
@@ -49,6 +44,7 @@ void	*repletion_checker(void *arg)
 		sem_wait(data->repletion);
 		i++;
 	}
+	sem_wait(data->speak);
 	sem_post(data->stop);
 	return (NULL);
 }
@@ -68,6 +64,8 @@ void	do_action(t_data *data, int action)
 	{
 		print_action(data, &data->philo, "is sleeping");
 		data->philo.nb_of_meal++;
+		if (data->philo.nb_of_meal == data->meal_goal)
+			sem_post(data->repletion);
 	}	
 	else if (action == THINK)
 		print_action(data, &data->philo, "is thinking");

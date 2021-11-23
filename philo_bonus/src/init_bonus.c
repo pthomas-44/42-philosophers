@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 18:49:26 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/23 19:20:05 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static int	init_sempahore(t_data *data)
 
 static int	init_thread(t_data *data)
 {
-	if (pthread_create(&data->monitor, NULL, &repletion_checker, &data))
+	if (pthread_create(&data->monitor, NULL, &repletion_checker, data))
 	{
 		print_error("pthread_create", NULL, NULL, errno);
 		return (EXIT_FAILURE);
@@ -82,8 +82,8 @@ int	init_data(t_data *data, char **argv)
 		return (EXIT_FAILURE);
 	}
 	memset(data->pid_philo, 0, sizeof(pid_t) * data->nb_of_philo);
-	if (init_thread(data) == EXIT_FAILURE
-		|| init_sempahore(data) == EXIT_FAILURE)
+	if (init_sempahore(data) == EXIT_FAILURE
+		|| init_thread(data) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
