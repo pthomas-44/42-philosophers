@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/23 20:13:42 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/24 05:45:23 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,16 +32,16 @@ SRCS		=	main.c				\
 				libft_functions.c	\
 				utils.c
 
-OBJS		=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
-
 INCS		=	$(addprefix $(PATH_INC), philo.h)
+
+OBJS		=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
 
 #~~~~ Macros ~~~~#
 
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -pthread# -fsanitize=address -fsanitize=thread
-RM			=	rm -rf
 INCLUDE		=	-I $(PATH_INC)
+RM			=	rm -rf
 
 #========================================#
 #=============== TARGETS ================#
@@ -52,7 +52,7 @@ INCLUDE		=	-I $(PATH_INC)
 all :			$(NAME)
 
 $(NAME) :		$(OBJS)
-				$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDE)
+				$(CC) $(CFLAGS) $(OBJS) -o $@ $(INCLUDE)
 
 re :			fclean all
 
