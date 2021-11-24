@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/23 20:23:59 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/24 05:47:26 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ NAME		=	philo_bonus
 #~~~~ Paths ~~~~#
 
 VPATH		=	src/
-PATH_OBJ	=	obj/
 PATH_INC	=	include/
+PATH_OBJ	=	obj/
 
 #~~~~ Files ~~~~#
  
@@ -32,16 +32,16 @@ SRCS		=	main_bonus.c			\
 				libft_functions_bonus.c	\
 				utils_bonus.c
 
-OBJS		=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
-
 INCS		=	$(addprefix $(PATH_INC), philo_bonus.h)
+
+OBJS		=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
 
 #~~~~ Macros ~~~~#
 
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -pthread# -fsanitize=address -fsanitize=thread
-RM			=	rm -rf
 INCLUDE		=	-I$(PATH_INC)
+RM			=	rm -rf
 
 #========================================#
 #=============== TARGETS ================#
@@ -54,7 +54,7 @@ all :			$(NAME)
 bonus :			all
 
 $(NAME) :		$(OBJS)
-				$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(INCLUDE)
+				$(CC) $(CFLAGS) $(OBJS) -o $@ $(INCLUDE)
 
 re :			fclean all
 
