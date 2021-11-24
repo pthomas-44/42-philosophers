@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/24 05:45:23 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/24 12:56:34 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ NAME		=	philo
 #~~~~ Paths ~~~~#
 
 VPATH		=	src/
-PATH_OBJ	=	obj/
 PATH_INC	=	include/
+PATH_OBJ	=	obj/
 
 #~~~~ Files ~~~~#
  

@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 20:30:07 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/24 13:14:28 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 
 typedef struct s_philo
 {
-	size_t			index;
 	pthread_t		thread;
+	size_t			index;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	time_t			last_meal;
 	size_t			nb_of_meal;
-	t_data			*data;
 	bool			stop;
+	t_data			*data;
 }					t_philo;
 
 // ~~ Datas struct
@@ -78,10 +78,9 @@ int				init_data(t_data *data, char **argv);
 // ~~ program.c
 int				start_philosopher(t_data *data);
 // ~~ libft_functions.c
-int				ft_str_isdigit(char *str);
 size_t			ft_strlen(const char *str);
-int				ft_atoi(const char *str);
 void			ft_putstr_fd(const char *s, int fd);
+int				ft_str_isdigit(char *str);
 int				ft_atoi_is_overflow(const char *str, int *nb);
 void			ft_putnbr_fd(long n, int fd);
 // ~~ utils.c
