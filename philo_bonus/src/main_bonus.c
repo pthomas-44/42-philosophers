@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:05 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 19:04:20 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/24 15:57:35 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	free_data(t_data *data)
 		print_error("sem_close: ", NULL, NULL, EINVAL);
 	if (sem_close(data->stop))
 		print_error("sem_close: ", NULL, NULL, EINVAL);
-	if (sem_close(data->repletion))
+	if (data->meal_goal && sem_close(data->repletion))
 		print_error("sem_close: ", NULL, NULL, EINVAL);
 }
 

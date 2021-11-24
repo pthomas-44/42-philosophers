@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 19:20:05 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/24 15:58:44 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@ static int	init_sempahore(t_data *data)
 	data->forks = sem_open("forks", O_CREAT | O_EXCL, 0644, data->nb_of_philo);
 	data->speak = sem_open("speak", O_CREAT | O_EXCL, 0644, 1);
 	data->stop = sem_open("stop", O_CREAT | O_EXCL, 0644, 0);
-	data->repletion = sem_open("repletion", O_CREAT | O_EXCL, 0644, 0);
+	if (data->meal_goal)
+		data->repletion = sem_open("repletion", O_CREAT | O_EXCL, 0644, 0);
 	if (data->forks == SEM_FAILED
 		|| data->speak == SEM_FAILED
 		|| data->stop == SEM_FAILED
-		|| data->repletion == SEM_FAILED)
+		|| (data->meal_goal && data->repletion == SEM_FAILED))
 	{
 		print_error("sem_open: ", NULL, NULL, errno);
 		return (EXIT_FAILURE);
@@ -57,12 +58,15 @@ static int	init_sempahore(t_data *data)
 
 static int	init_thread(t_data *data)
 {
-	if (pthread_create(&data->monitor, NULL, &repletion_checker, data))
+	if (data->meal_goal)
 	{
-		print_error("pthread_create", NULL, NULL, errno);
-		return (EXIT_FAILURE);
+		if (pthread_create(&data->monitor, NULL, &repletion_checker, data))
+		{
+			print_error("pthread_create", NULL, NULL, errno);
+			return (EXIT_FAILURE);
+		}
+		pthread_detach(data->monitor);
 	}
-	pthread_detach(data->monitor);
 	return (EXIT_SUCCESS);
 }
 

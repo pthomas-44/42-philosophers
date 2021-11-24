@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 20:28:40 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/24 15:31:59 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,16 @@ void	print_error(char *cmd, char *value, char *error, int status)
 		ft_putstr_fd("Undefined error\n", STDERR_FILENO);
 }
 
-void	custom_usleep(time_t microseconds)
+void	custom_usleep(time_t microseconds, t_data *data)
 {
 	time_t	start;
 
 	start = get_time();
 	while (get_time() - start < microseconds / 1000)
-		usleep(100);
+	{
+		if (data->nb_of_philo > 100)
+			usleep(1000);
+		else
+			usleep(100);
+	}
 }
