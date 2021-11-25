@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 15:03:25 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 16:23:23 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ void	print_action(t_philo *philo, char *action)
 	time_t	time;
 
 	time = get_time() - philo->data->start;
-	ft_putnbr_fd(time, STDOUT_FILENO);
-	write(STDOUT_FILENO, " ", 1);
-	ft_putnbr_fd(philo->index, STDOUT_FILENO);
-	write(STDOUT_FILENO, " ", 1);
-	ft_putstr_fd(action, STDOUT_FILENO);
-	write(STDOUT_FILENO, "\n", 1);
+	printf("%ld %ld %s\n", time, philo->index, action);
 }
 
 void	print_error(char *cmd, char *value, char *error, int status)
@@ -78,5 +73,19 @@ void	custom_usleep(time_t microseconds, t_data *data)
 			usleep(100);
 		else
 			usleep(1000);
+	}
+}
+
+void	spin_lock(time_t starting_time, time_t waiting_time, t_data *data)
+{
+	while (get_time() - starting_time < waiting_time)
+	{
+		pthread_mutex_lock(&data->speak);
+		if (data->stop == true)
+		{
+			pthread_mutex_unlock(&data->speak);
+			break ;
+		}
+		pthread_mutex_unlock(&data->speak);
 	}
 }
