@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 20:30:04 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 14:58:40 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,12 @@ void	print_action(t_philo *philo, char *action)
 	time_t	time;
 
 	time = get_time() - philo->data->start;
-	ft_putnbr_fd(time, 1);
-	write(1, " ", 1);
-	ft_putnbr_fd(philo->index, 1);
-	write(1, " ", 1);
-	ft_putstr_fd(action, 1);
-	write(1, "\n", 1);
+	ft_putnbr_fd(time, STDOUT_FILENO);
+	write(STDOUT_FILENO, " ", 1);
+	ft_putnbr_fd(philo->index, STDOUT_FILENO);
+	write(STDOUT_FILENO, " ", 1);
+	ft_putstr_fd(action, STDOUT_FILENO);
+	write(STDOUT_FILENO, "\n", 1);
 }
 
 void	print_error(char *cmd, char *value, char *error, int status)
@@ -74,6 +74,9 @@ void	custom_usleep(time_t microseconds, t_data *data)
 			break ;
 		}
 		pthread_mutex_unlock(&data->speak);
-		usleep(100);
+		if (data->nb_of_philo >= 100)
+			usleep(1000);
+		else
+			usleep(100);
 	}
 }

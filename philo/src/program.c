@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 20:29:59 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 14:56:38 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void	check_death(t_data *data)
 
 	while (1)
 	{
-		pthread_mutex_lock(&data->speak);
 		i = 0;
+		pthread_mutex_lock(&data->speak);
 		time = get_time();
 		while (i < data->nb_of_philo)
 		{

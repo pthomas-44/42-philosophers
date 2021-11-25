@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/24 05:45:23 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/25 14:35:18 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,8 @@ NAME		=	philo
 #~~~~ Paths ~~~~#
 
 VPATH		=	src/
-PATH_OBJ	=	obj/
 PATH_INC	=	include/
+PATH_OBJ	=	obj/
 
 #~~~~ Files ~~~~#
  
@@ -40,7 +40,7 @@ OBJS		=	$(addprefix $(PATH_OBJ), $(SRCS:.c=.o))
 
 CC			=	cc
 CFLAGS		=	-Wall -Wextra -Werror -pthread# -fsanitize=address -fsanitize=thread
-INCLUDE		=	-I $(PATH_INC)
+INCLUDE		=	-I$(PATH_INC)
 RM			=	rm -rf
 
 #========================================#
@@ -52,7 +52,7 @@ RM			=	rm -rf
 all :			$(NAME)
 
 $(NAME) :		$(OBJS)
-				$(CC) $(CFLAGS) $(OBJS) -o $@ $(INCLUDE)
+				$(CC) $(CFLAGS) $^ -o $@ $(INCLUDE)
 
 re :			fclean all
 

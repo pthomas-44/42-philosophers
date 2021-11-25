@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 20:30:07 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 14:37:31 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 /*** ~~ LIBS ~~ ***/
 
 # include <string.h>
-# include <stdio.h>
 # include <unistd.h>
 # include <errno.h>
 # include <stdlib.h>
 # include <sys/time.h>
 # include <pthread.h>
 # include <stdbool.h>
-# include <limits.h>
 
 /*** ~~ TYPES ~~ ***/
 
@@ -55,7 +53,7 @@ typedef struct s_philo
 	bool			stop;
 }					t_philo;
 
-// ~~ Datas struct
+// ~~ Data struct
 
 typedef struct s_data
 {
@@ -78,10 +76,9 @@ int				init_data(t_data *data, char **argv);
 // ~~ program.c
 int				start_philosopher(t_data *data);
 // ~~ libft_functions.c
-int				ft_str_isdigit(char *str);
-size_t			ft_strlen(const char *str);
-int				ft_atoi(const char *str);
 void			ft_putstr_fd(const char *s, int fd);
+size_t			ft_strlen(const char *str);
+int				ft_str_isdigit(char *str);
 int				ft_atoi_is_overflow(const char *str, int *nb);
 void			ft_putnbr_fd(long n, int fd);
 // ~~ utils.c
