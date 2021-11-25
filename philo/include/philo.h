@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 14:37:31 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 15:02:57 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ time_to_sleep [number_of_times_each_philosopher_must_eat]\n"
 
 typedef struct s_philo
 {
-	size_t			index;
 	pthread_t		thread;
+	size_t			index;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
 	time_t			last_meal;
 	size_t			nb_of_meal;
-	t_data			*data;
 	bool			stop;
+	t_data			*data;
 }					t_philo;
 
 // ~~ Data struct

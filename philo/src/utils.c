@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 14:58:40 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 15:03:25 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void	custom_usleep(time_t microseconds, t_data *data)
 			break ;
 		}
 		pthread_mutex_unlock(&data->speak);
-		if (data->nb_of_philo >= 100)
-			usleep(1000);
-		else
+		if (data->nb_of_philo < 100)
 			usleep(100);
+		else
+			usleep(1000);
 	}
 }

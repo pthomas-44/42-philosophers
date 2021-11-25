@@ -6,11 +6,23 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:05:09 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/23 20:29:50 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/24 13:12:02 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+size_t	ft_strlen(const char *str)
+{
+	size_t	i;
+
+	if (!str)
+		return (0);
+	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
 
 void	ft_putstr_fd(const char *s, int fd)
 {
@@ -26,18 +38,6 @@ int	ft_str_isdigit(char *str)
 		str++;
 	}
 	return (1);
-}
-
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
 }
 
 int	ft_atoi_is_overflow(const char *str, int *nb)
