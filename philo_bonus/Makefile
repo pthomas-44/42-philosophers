@@ -6,7 +6,7 @@
 #    By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/16 17:05:21 by pthomas           #+#    #+#              #
-#    Updated: 2021/11/24 05:47:26 by pthomas          ###   ########lyon.fr    #
+#    Updated: 2021/11/25 15:04:32 by pthomas          ###   ########lyon.fr    #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,7 @@ all :			$(NAME)
 bonus :			all
 
 $(NAME) :		$(OBJS)
-				$(CC) $(CFLAGS) $(OBJS) -o $@ $(INCLUDE)
+				$(CC) $(CFLAGS) $^ -o $@ $(INCLUDE)
 
 re :			fclean all
 

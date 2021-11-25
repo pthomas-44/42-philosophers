@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/24 15:55:57 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 15:30:16 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,14 @@ void	*repletion_checker(void *arg)
 
 	data = arg;
 	i = 0;
+	sem_wait(data->speak);
 	while (i < data->nb_of_philo)
 	{
+		sem_post(data->speak);
 		sem_wait(data->repletion);
+		sem_wait(data->speak);
 		i++;
 	}
-	sem_wait(data->speak);
 	sem_post(data->stop);
 	return (NULL);
 }
@@ -106,7 +108,7 @@ int	start_philosopher(t_data *data)
 		data->pid_philo[i] = fork();
 		if (data->pid_philo[i] == -1)
 		{
-			print_error("fork:", NULL, NULL, errno);
+			print_error("fork: ", NULL, NULL, errno);
 			while (--i >= 0)
 				kill(data->pid_philo[i], SIGKILL);
 			return (EXIT_FAILURE);

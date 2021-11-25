@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/24 15:58:44 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/25 15:30:03 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@ void	init_philo(t_data *data)
 	sem_unlink("repletion");
 	if (pthread_create(&data->philo.monitor, NULL, &death_checker, data))
 	{
-		print_error("pthread_create", NULL, NULL, errno);
+		print_error("pthread: ", NULL, NULL, errno);
 		sem_post(data->stop);
 	}
+	pthread_detach(data->philo.monitor);
 }
 
 static int	init_sempahore(t_data *data)
@@ -62,7 +63,7 @@ static int	init_thread(t_data *data)
 	{
 		if (pthread_create(&data->monitor, NULL, &repletion_checker, data))
 		{
-			print_error("pthread_create", NULL, NULL, errno);
+			print_error("pthread: ", NULL, NULL, errno);
 			return (EXIT_FAILURE);
 		}
 		pthread_detach(data->monitor);
