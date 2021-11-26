@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:39:17 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 15:30:16 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/26 15:49:00 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ void	do_action(t_data *data, int action)
 
 static void	*routine(t_data *data)
 {
-	if (data->philo.index % 2 == 0)
-		custom_usleep(data->time_to_eat * 1000L, data);
+	if (data->philo.index > data->nb_of_philo / 2L)
+		custom_usleep(data->time_to_eat / 2L * 1000L, data);
 	while (1)
 	{
 		sem_wait(data->forks);
