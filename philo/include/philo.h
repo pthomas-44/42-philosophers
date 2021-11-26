@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 16:23:34 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/26 14:15:57 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,5 @@ time_t			get_time(void);
 void			print_action(t_philo *philo, char *action);
 void			print_error(char *cmd, char *value, char *error, int status);
 void			custom_usleep(time_t microseconds, t_data *data);
-void			spin_lock(time_t starting_time, time_t waiting_time, t_data *data);
 
 #endif

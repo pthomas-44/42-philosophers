@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 16:23:23 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/11/26 14:12:02 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,19 +73,5 @@ void	custom_usleep(time_t microseconds, t_data *data)
 			usleep(100);
 		else
 			usleep(1000);
-	}
-}
-
-void	spin_lock(time_t starting_time, time_t waiting_time, t_data *data)
-{
-	while (get_time() - starting_time < waiting_time)
-	{
-		pthread_mutex_lock(&data->speak);
-		if (data->stop == true)
-		{
-			pthread_mutex_unlock(&data->speak);
-			break ;
-		}
-		pthread_mutex_unlock(&data->speak);
 	}
 }
