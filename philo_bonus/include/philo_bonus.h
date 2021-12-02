@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 17:04:51 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 15:06:10 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/12/02 13:01:07 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 /*** ~~ LIBS ~~ ***/
 
+# include <stdio.h>
 # include <string.h>
 # include <unistd.h>
 # include <errno.h>
@@ -86,11 +87,11 @@ void			ft_putstr_fd(const char *s, int fd);
 int				ft_str_isdigit(char *str);
 size_t			ft_strlen(const char *str);
 int				ft_atoi_is_overflow(const char *str, int *nb);
-void			ft_putnbr_fd(long n, int fd);
 // ~~ utils_bonus.c
 time_t			get_time(void);
 void			print_action(t_data *data, t_philo *philo, char *action);
 void			print_error(char *cmd, char *value, char *error, int status);
 void			custom_usleep(time_t microseconds, t_data *data);
+char			*gen_sem_name(int philo_id);
 
 #endif
