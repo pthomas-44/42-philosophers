@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/26 14:12:02 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 13:39:54 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	custom_usleep(time_t microseconds, t_data *data)
 	time_t	start;
 
 	start = get_time();
-	while (get_time() - start < microseconds / 1000L)
+	while (get_time() - start < microseconds)
 	{
 		pthread_mutex_lock(&data->speak);
 		if (data->stop == true)

@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 15:29:23 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 13:43:14 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	custom_usleep(time_t microseconds, t_data *data)
 	time_t	start;
 
 	start = get_time();
-	while (get_time() - start < microseconds / 1000)
+	while (get_time() - start < microseconds)
 	{
 		if (data->nb_of_philo < 100)
 			usleep(100);
