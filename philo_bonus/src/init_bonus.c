@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:35:55 by pthomas           #+#    #+#             */
-/*   Updated: 2021/11/25 15:30:03 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2021/12/02 13:06:05 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 
 void	init_philo(t_data *data)
 {
-	char	name[3];
+	char	*name;
 
-	name[0] = 'p';
-	name[1] = data->philo.index + '0';
-	name[2] = '\0';
+	name = gen_sem_name(data->philo.index);
 	data->philo.last_meal = data->start;
 	data->philo.rights
 		= sem_open(name, O_CREAT | O_EXCL, 0644, data->nb_of_philo);
+	if (data->philo.rights == SEM_FAILED)
+		write(2, "test\n", 5);
 	sem_unlink(name);
 	sem_unlink("forks");
 	sem_unlink("speak");
 	sem_unlink("stop");
 	sem_unlink("repletion");
+	free(name);
 	if (pthread_create(&data->philo.monitor, NULL, &death_checker, data))
 	{
 		print_error("pthread: ", NULL, NULL, errno);

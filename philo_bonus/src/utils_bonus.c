@@ -6,7 +6,7 @@
 /*   By: pthomas <pthomas@student.42lyon.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/16 20:00:44 by pthomas           #+#    #+#             */
-/*   Updated: 2022/01/12 13:43:14 by pthomas          ###   ########lyon.fr   */
+/*   Updated: 2022/01/12 13:44:13 by pthomas          ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,7 @@ void	print_action(t_data *data, t_philo *philo, char *action)
 	time_t	time;
 
 	time = get_time() - data->start;
-	ft_putnbr_fd(time, STDOUT_FILENO);
-	write(STDOUT_FILENO, " ", 1);
-	ft_putnbr_fd(philo->index, STDOUT_FILENO);
-	write(STDOUT_FILENO, " ", 1);
-	ft_putstr_fd(action, STDOUT_FILENO);
-	write(STDOUT_FILENO, "\n", 1);
+	printf("%ld %ld %s\n", time, philo->index, action);
 }
 
 void	print_error(char *cmd, char *value, char *error, int status)
@@ -72,4 +67,30 @@ void	custom_usleep(time_t microseconds, t_data *data)
 		else
 			usleep(1000);
 	}
+}
+
+char	*gen_sem_name(int philo_id)
+{
+	int		index;
+	int		tmp;
+	char	*name;
+
+	index = 2;
+	tmp = philo_id;
+	while (tmp > 9)
+	{
+		tmp /= 10;
+		index++;
+	}
+	name = malloc(index * sizeof(char));
+	name[0] = 'p';
+	name[index--] = '\0';
+	while (philo_id > 9)
+	{
+		name[index] = philo_id % 10 + '0';
+		philo_id /= 10;
+		index--;
+	}
+	name[index] = philo_id % 10 + '0';
+	return (name);
 }
